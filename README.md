@@ -82,6 +82,21 @@ Grading weights are task-specific:
 | `multi_term_negotiation` | deal_quality 0.35 · strategic_concessions 0.25 · constraint_compliance 0.20 · efficiency 0.20 |
 | `strategic_contract_close` | final_deal_utility 0.40 · counterparty_signal_exploitation 0.20 · constraint_compliance 0.20 · close_decision_quality 0.10 · efficiency 0.10 |
 
+## Negotiation Concepts
+
+The action space and grading rubric borrow several terms from the academic negotiation literature (Fisher & Ury's *Getting to Yes*, the Harvard Program on Negotiation, Wharton integrative bargaining research). Brief definitions for readers outside the field:
+
+| Term | Meaning |
+|---|---|
+| **BATNA** | *Best Alternative To a Negotiated Agreement.* Your fallback if the deal fails, e.g. "we already have a competing offer at $80k." Agents should never close below their BATNA. |
+| **Reservation value** | The minimum utility the agent is willing to accept. Should be anchored to BATNA; closing below it is a grading failure. |
+| **Integrative bargaining** | Creating joint value by trading across terms (e.g. give longer contract, get lower price) rather than haggling on a single number. |
+| **Bundle offer** | A structured give/get across two terms: "if you move on X, I'll move on Y." |
+| **Package offer** | A multi-term proposal where several terms are linked; the counterparty must accept or reject the package as a whole. |
+| **MESO** | *Multiple Equivalent Simultaneous Offers.* Present several packages that are all equally valuable to you. The counterparty picks one, and their choice reveals their hidden priorities, without you having to concede. A standard information-gathering technique. |
+| **Tradeoff request** | An explicit ask for a term exchange: "we'll concede on contract length if you tighten payment terms." |
+| **Signal exploitation** | Using counterparty messages, offer history, and responses to infer the hidden utility weights the environment never reveals. |
+
 ## Action Space
 
 Actions are grouped by role in the negotiation loop.
@@ -120,7 +135,7 @@ Actions are grouped by role in the negotiation loop.
 | `final_offer` | Last-chance close attempt |
 | `walk_away` | Exit with an optional reason; credited when counterparty utility was poor |
 
-**Example MESO offer** (Multiple Equivalent Simultaneous Offers):
+**Example MESO offer.** The agent presents three packages that are all roughly equivalent from its own utility perspective:
 
 ```json
 {
@@ -134,7 +149,7 @@ Actions are grouped by role in the negotiation loop.
 }
 ```
 
-MESO is a standard professional negotiation technique for revealing counterparty preferences without unilateral concessions. The environment rewards successful MESO usage through the `strategic_concessions` scoring component.
+If the counterparty picks variant B, the agent learns they value long contracts. If they pick C, they're price-sensitive. The agent extracted hidden preference information without conceding anything. The environment rewards successful MESO usage through the `strategic_concessions` scoring component.
 
 ## Observation Space
 
@@ -231,7 +246,7 @@ uv pip install -e .
 uvicorn server.app:app --host 0.0.0.0 --port 7860
 
 # Or build and run the container
-docker build -t negotiation-env -f server/Dockerfile .
+docker build -t negotiation-env .
 docker run -p 7860:7860 negotiation-env
 
 # Validate OpenEnv spec compliance
@@ -297,8 +312,8 @@ Round 5 ─ accept_counterparty_offer()
 vendor_negotiation_gym/
 ├── server/
 │   ├── app.py              # FastAPI app, OpenEnv endpoints
-│   ├── environment.py      # Core Environment class, grading, rewards
-│   └── Dockerfile
+│   └── environment.py      # Core Environment class, grading, rewards
+├── Dockerfile              # HuggingFace Spaces build
 ├── models.py               # Typed Pydantic Action / Observation / State
 ├── scenarios.py            # 52 hand-written scenarios
 ├── deal_engine.py          # Utility, constraint, and counterparty simulator
