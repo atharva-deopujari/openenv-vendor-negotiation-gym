@@ -1,0 +1,11 @@
+spec_version: 1
+name: vendor-negotiation-gym
+description: >
+  An enterprise vendor negotiation environment where AI agents negotiate
+  multi-term contracts with deterministic counterparties under budget,
+  SLA, and policy constraints. Features 52 realistic scenarios across
+  software vendors, cloud providers, logistics, agencies, and enterprise buyers.
+type: space
+runtime: fastapi
+app: server.app:app
+port: 7860
