@@ -22,7 +22,7 @@ from models import NegotiationAction
 
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
-HF_TOKEN = os.getenv("HF_TOKEN") or os.getenv("OPENAI_API_KEY", "")
+HF_TOKEN = os.getenv("HF_TOKEN") or os.getenv("OPENAI_API_KEY")
 ENV_URL = os.getenv("ENV_URL", "http://localhost:7860")
 EPISODES_PER_TASK = int(os.getenv("EPISODES_PER_TASK", "5"))
 INFERENCE_TEMPERATURE = float(os.getenv("INFERENCE_TEMPERATURE", "0"))
