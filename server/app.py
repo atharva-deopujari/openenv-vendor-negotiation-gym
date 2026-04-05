@@ -16,6 +16,32 @@ app = create_app(
 )
 
 
+@app.get("/", include_in_schema=False)
+def index():
+    return {
+        "name": "vendor-negotiation-gym",
+        "status": "running",
+        "description": (
+            "OpenEnv environment for multi-dimensional enterprise contract "
+            "negotiation under partial observability."
+        ),
+        "endpoints": {
+            "health": "GET /health",
+            "metadata": "GET /metadata",
+            "schema": "GET /schema",
+            "reset": "POST /reset",
+            "step": "POST /step",
+            "state": "GET /state",
+        },
+        "tasks": [
+            "deal_qualification",
+            "multi_term_negotiation",
+            "strategic_contract_close",
+        ],
+        "repo": "https://github.com/atharva-deopujari/openenv-vendor-negotiation-gym",
+    }
+
+
 def main():
     uvicorn.run(app, host="0.0.0.0", port=7860)
 
