@@ -13,6 +13,8 @@ tags:
 
 An OpenEnv environment for multi-dimensional enterprise contract negotiation under partial observability. Agents negotiate vendor contracts across nine deal dimensions against deterministic counterparties whose utility weights are hidden and must be inferred from dialogue.
 
+**Live demo:** [HuggingFace Space](https://huggingface.co/spaces/atharvadeopujari/openenv-vendor-negotiation-gym) · **Source:** [GitHub](https://github.com/atharva-deopujari/openenv-vendor-negotiation-gym)
+
 ## Overview
 
 Enterprise procurement is a high-stakes, multi-dimensional decision problem: buyers and vendors negotiate across price, contract length, SLAs, payment terms, support tiers, onboarding timelines, and more, under budget and compliance constraints. This environment models that domain with 52 hand-written scenarios across five counterparty archetypes, a 14-action negotiation interface, and a grading rubric that rewards strategic competence rather than raw model capability.
