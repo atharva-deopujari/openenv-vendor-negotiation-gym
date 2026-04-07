@@ -658,7 +658,9 @@ class VendorNegotiationEnvironment(
         multiplier = max(0.15, multiplier)  # floor so scores don't collapse to 0
         score *= multiplier
 
-        return round(min(max(score, 0.0), 1.0), 4)
+        # Clamp to (0, 1) exclusive -- the evaluation harness requires
+        # scores strictly between 0 and 1.
+        return round(min(max(score, 0.0001), 0.9999), 4)
 
 
     def _make_observation(self, reward, done, feedback) -> NegotiationObservation:
