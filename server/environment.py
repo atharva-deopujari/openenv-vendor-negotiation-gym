@@ -565,11 +565,11 @@ class VendorNegotiationEnvironment(
 
     def _compute_grade(self) -> float:
         if self._internal is None:
-            return 0.0
+            return 0.001
         s = self._internal
         task = TASKS.get(s.task_id)
         if not task:
-            return 0.0
+            return 0.001
 
         weights = task["grading_weights"]
         score = 0.0
@@ -660,7 +660,7 @@ class VendorNegotiationEnvironment(
 
         # Clamp to (0, 1) exclusive -- the evaluation harness requires
         # scores strictly between 0 and 1.
-        return round(min(max(score, 0.0001), 0.9999), 4)
+        return round(min(max(score, 0.001), 0.999), 4)
 
 
     def _make_observation(self, reward, done, feedback) -> NegotiationObservation:

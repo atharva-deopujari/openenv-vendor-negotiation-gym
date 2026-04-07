@@ -990,7 +990,7 @@ def _run_episode(
 
     rewards: List[float] = []
     steps_taken = 0
-    score = 0.0
+    score = 0.001  # never exactly 0.0 -- validator requires (0, 1) exclusive
     success = False
 
     try:
@@ -1018,12 +1018,13 @@ def _run_episode(
             )
 
         state = env.state()
-        score = float(state.grade_score) if state.grade_score is not None else 0.0
-        score = min(max(score, 0.0), 1.0)
+        score = float(state.grade_score) if state.grade_score is not None else 0.001
+        score = min(max(score, 0.001), 0.999)
         success = score >= SUCCESS_SCORE_THRESHOLD
         return score
     except Exception as exc:
         print(f"[DEBUG] Episode failed: {exc}", flush=True)
+        score = max(score, 0.001)
         return score
     finally:
         log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
